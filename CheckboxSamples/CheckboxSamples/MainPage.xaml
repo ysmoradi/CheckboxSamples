@@ -37,20 +37,39 @@
                             Padding="0"
                             BackgroundColor="{Binding FillColor}"
                             BorderColor="{Binding OutlineColor}"
-                            CornerRadius="3"
                             HasShadow="True"
                             HeightRequest="20"
                             VerticalOptions="Center"
                             WidthRequest="20">
+                            <Frame.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Shape}"
+                                    TargetType="Frame"
+                                    Value="Circle">
+                                    <Setter Property="CornerRadius" Value="10" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding Shape}"
+                                    TargetType="Frame"
+                                    Value="Rectangle">
+                                    <Setter Property="CornerRadius" Value="2" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding Shape}"
+                                    TargetType="Frame"
+                                    Value="Native">
+                                    <Setter Property="CornerRadius" Value="{OnPlatform Default=2, iOS=10}" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                            <Frame.GestureRecognizers>
+                                <!--  Remark: GestureRecognizers on frame instead of grid  -->
+                                <TapGestureRecognizer Command="{Binding CheckTappedCommand}" CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
                             <Label
                                 HorizontalOptions="Center"
                                 Text="✓"
                                 TextColor="{Binding CheckColor}"
                                 VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <!--  Remark: GestureRecognizers on frame instead of grid  -->
-                                <TapGestureRecognizer Command="{Binding CheckTappedCommand}" CommandParameter="{Binding}" />
-                            </Frame.GestureRecognizers>
                         </Frame>
                         <ContentView Grid.Column="1">
                             <ContentView.Content>
@@ -73,9 +92,18 @@
 
     <StackLayout>
 
-        <bitView:Checkbox IsChecked="False" Text="Simple check box1" Shape="Native" />
-        <bitView:Checkbox IsChecked="False" Text="Simple check box2" Shape="Circle" />
-        <bitView:Checkbox IsChecked="False" Text="Simple check box3" Shape="Rectangle" />
+        <bitView:Checkbox
+            IsChecked="False"
+            Shape="Native"
+            Text="Simple check box1" />
+        <bitView:Checkbox
+            IsChecked="False"
+            Shape="Circle"
+            Text="Simple check box2" />
+        <bitView:Checkbox
+            IsChecked="False"
+            Shape="Rectangle"
+            Text="Simple check box3" />
 
         <bitView:Checkbox Text="Simple check box" />
 
