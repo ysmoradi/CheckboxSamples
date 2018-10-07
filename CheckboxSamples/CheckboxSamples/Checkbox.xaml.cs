@@ -29,7 +29,7 @@ namespace Bit.View
             set => SetValue(TextProperty, value);
         }
 
-        public static BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Checkbox), defaultValue: Color.Black, defaultBindingMode: BindingMode.OneWay);
+        public static BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Checkbox), defaultValue: Color.Black, defaultBindingMode: BindingMode.OneTime);
 
         public Color TextColor
         {
@@ -37,7 +37,7 @@ namespace Bit.View
             set { SetValue(TextColorProperty, value); }
         }
 
-        public static BindableProperty CheckColorProperty = BindableProperty.Create(nameof(CheckColor), typeof(Color), typeof(Checkbox), defaultValue: Color.White, defaultBindingMode: BindingMode.OneWay);
+        public static BindableProperty CheckColorProperty = BindableProperty.Create(nameof(CheckColor), typeof(Color), typeof(Checkbox), defaultValue: Color.White, defaultBindingMode: BindingMode.OneTime);
 
         public Color CheckColor
         {
@@ -45,7 +45,7 @@ namespace Bit.View
             set { SetValue(CheckColorProperty, value); }
         }
 
-        public static BindableProperty FillColorProperty = BindableProperty.Create(nameof(FillColor), typeof(Color), typeof(Checkbox), defaultValue: Color.Blue, defaultBindingMode: BindingMode.OneWay);
+        public static BindableProperty FillColorProperty = BindableProperty.Create(nameof(FillColor), typeof(Color), typeof(Checkbox), defaultValue: Color.Blue, defaultBindingMode: BindingMode.OneTime);
 
         public Color FillColor
         {
@@ -53,12 +53,28 @@ namespace Bit.View
             set { SetValue(FillColorProperty, value); }
         }
 
-        public static BindableProperty OutlineColorProperty = BindableProperty.Create(nameof(OutlineColor), typeof(Color), typeof(Checkbox), defaultValue: Color.Blue, defaultBindingMode: BindingMode.OneWay);
+        public static BindableProperty OutlineColorProperty = BindableProperty.Create(nameof(OutlineColor), typeof(Color), typeof(Checkbox), defaultValue: Color.Blue, defaultBindingMode: BindingMode.OneTime);
 
         public Color OutlineColor
         {
             get { return (Color)GetValue(OutlineColorProperty); }
             set { SetValue(OutlineColorProperty, value); }
+        }
+
+        public static BindableProperty IsCheckedChangedCommandProperty = BindableProperty.Create(nameof(IsCheckedChangedCommand), typeof(ICommand), typeof(Checkbox), defaultValue: null, defaultBindingMode: BindingMode.OneTime);
+
+        public ICommand IsCheckedChangedCommand
+        {
+            get { return (ICommand)GetValue(IsCheckedChangedCommandProperty); }
+            set { SetValue(IsCheckedChangedCommandProperty, value); }
+        }
+
+        public static BindableProperty ShapeProperty = BindableProperty.Create(nameof(Shape), typeof(Shape), typeof(Checkbox), defaultValue: Shape.Native, defaultBindingMode: BindingMode.OneTime);
+
+        public Shape Shape
+        {
+            get { return (Shape)GetValue(ShapeProperty); }
+            set { SetValue(ShapeProperty, value); }
         }
 
         public static BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(Checkbox), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (sender, oldValue, newValue) =>
@@ -91,22 +107,6 @@ namespace Bit.View
         public virtual Xamarin.Forms.View Content { get; set; }
 
         public event EventHandler<IsCheckChangedEventArgs> IsCheckedChanged;
-
-        public static BindableProperty IsCheckedChangedCommandProperty = BindableProperty.Create(nameof(IsCheckedChangedCommand), typeof(ICommand), typeof(Checkbox), defaultValue: null, defaultBindingMode: BindingMode.OneTime);
-
-        public ICommand IsCheckedChangedCommand
-        {
-            get { return (ICommand)GetValue(IsCheckedChangedCommandProperty); }
-            set { SetValue(IsCheckedChangedCommandProperty, value); }
-        }
-
-        public static BindableProperty ShapeProperty = BindableProperty.Create(nameof(Shape), typeof(Shape), typeof(Checkbox), defaultValue: Shape.Native, defaultBindingMode: BindingMode.OneWay);
-
-        public Shape Shape
-        {
-            get { return (Shape)GetValue(ShapeProperty); }
-            set { SetValue(ShapeProperty, value); }
-        }
     }
 
     public class IsCheckChangedEventArgs : EventArgs
