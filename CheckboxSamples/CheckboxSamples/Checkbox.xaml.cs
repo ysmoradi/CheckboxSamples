@@ -15,8 +15,6 @@ namespace Bit.View
             CheckTappedCommand = new Command<Checkbox>(checkbox =>
             {
                 checkbox.IsChecked = !checkbox.IsChecked;
-
-                IsCheckedChanged?.Invoke(checkbox, new IsCheckChangedEventArgs { IsChecked = checkbox.IsChecked });
             });
 
             // IsCheckedProperty.DefaultValue is true.
@@ -65,12 +63,19 @@ namespace Bit.View
 
         public static BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(Checkbox), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (sender, oldValue, newValue) =>
         {
-            if (newValue is bool valueAsBool)
+            if (newValue is bool newValueAsBool)
             {
-                if (valueAsBool == true)
-                    VisualStateManager.GoToState((VisualElement)sender, "Checked");
+                Checkbox checkbox = (Checkbox)sender;
+
+                if (newValueAsBool == true)
+                    VisualStateManager.GoToState(checkbox, "Checked");
                 else
-                    VisualStateManager.GoToState((VisualElement)sender, "Unchecked");
+                    VisualStateManager.GoToState(checkbox, "Unchecked");
+
+                checkbox.IsCheckedChanged?.Invoke(checkbox, new IsCheckChangedEventArgs { IsChecked = newValueAsBool });
+
+                if (checkbox.IsCheckedChangedCommand?.CanExecute(newValueAsBool) == true)
+                    checkbox.IsCheckedChangedCommand?.Execute(newValueAsBool);
             }
         });
 
@@ -83,10 +88,17 @@ namespace Bit.View
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ICommand CheckTappedCommand { get; set; }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Xamarin.Forms.View Content { get; set; }
 
         public event EventHandler<IsCheckChangedEventArgs> IsCheckedChanged;
+
+        public static BindableProperty IsCheckedChangedCommandProperty = BindableProperty.Create(nameof(IsCheckedChangedCommand), typeof(ICommand), typeof(Checkbox), defaultValue: null, defaultBindingMode: BindingMode.OneTime);
+
+        public ICommand IsCheckedChangedCommand
+        {
+            get { return (ICommand)GetValue(IsCheckedChangedCommandProperty); }
+            set { SetValue(IsCheckedChangedCommandProperty, value); }
+        }
     }
 
     public class IsCheckChangedEventArgs : EventArgs
