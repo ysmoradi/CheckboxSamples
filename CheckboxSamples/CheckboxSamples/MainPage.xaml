@@ -3,7 +3,11 @@
     x:Class="CheckboxSamples.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:app="clr-namespace:CheckboxSamples"
     xmlns:bitView="clr-namespace:Bit.View">
+    <ContentPage.BindingContext>
+        <app:MainPageViewModel />
+    </ContentPage.BindingContext>
 
     <ContentPage.Resources>
         <Style x:Key="ExtendedCheckboxUI" TargetType="bitView:Checkbox">
@@ -45,6 +49,10 @@
                                     Text="✓"
                                     TextColor="{TemplateBinding CheckColor}"
                                     VerticalOptions="Center" />
+                                <Frame.GestureRecognizers>
+                                    <!--  Remark: GestureRecognizers on frame instead of grid  -->
+                                    <TapGestureRecognizer Command="{TemplateBinding CheckTappedCommand}" CommandParameter="{TemplateBinding}" />
+                                </Frame.GestureRecognizers>
                             </Frame>
                             <Label
                                 Grid.Column="1"
@@ -58,10 +66,6 @@
                                 </Label.Triggers>
                             </Label>
                             <ContentPresenter Grid.Column="1" />
-                            <Grid.GestureRecognizers>
-                                <!--  Remark: GestureRecognizers on grid instead of frame  -->
-                                <TapGestureRecognizer Command="{TemplateBinding CheckTappedCommand}" CommandParameter="{TemplateBinding}" />
-                            </Grid.GestureRecognizers>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -90,6 +94,14 @@
         </bitView:Checkbox>
 
         <bitView:Checkbox Style="{StaticResource ExtendedCheckboxUI}" Text="Fully customized check box. See style remarks!" />
+
+        <Button Command="{Binding ChangeIsChecked}" Text="Change is checked!" />
+        <bitView:Checkbox IsChecked="{Binding IsChecked}" Text="Test is checked from view model binding" />
+        <bitView:Checkbox
+            IsChecked="{Binding IsChecked}"
+            IsEnabled="False"
+            Text="Test is checked from view model binding 2" />
+        <Label Text="{Binding IsChecked}" />
 
     </StackLayout>
 </ContentPage>
