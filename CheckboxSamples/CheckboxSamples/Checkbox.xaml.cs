@@ -63,7 +63,7 @@ namespace Bit.View
             set { SetValue(OutlineColorProperty, value); }
         }
 
-        public static BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(Checkbox), defaultValue: true, defaultBindingMode: BindingMode.OneWay, propertyChanged: (sender, oldValue, newValue) =>
+        public static BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(Checkbox), defaultValue: true, defaultBindingMode: BindingMode.TwoWay, propertyChanged: (sender, oldValue, newValue) =>
         {
             if (newValue is bool valueAsBool)
             {
