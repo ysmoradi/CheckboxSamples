@@ -32,15 +32,15 @@
 
             <Setter Property="ControlTemplate">
                 <ControlTemplate>
-                    <Grid>
+                    <Grid x:DataType="bitView:Checkbox" BindingContext="{TemplateBinding}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Frame
                             Padding="0"
-                            BackgroundColor="{TemplateBinding FillColor}"
-                            BorderColor="{TemplateBinding OutlineColor}"
+                            BackgroundColor="{Binding FillColor}"
+                            BorderColor="{Binding OutlineColor}"
                             CornerRadius="3"
                             HasShadow="True"
                             HeightRequest="20"
@@ -49,23 +49,23 @@
                             <Label
                                 HorizontalOptions="Center"
                                 Text="✓"
-                                TextColor="{TemplateBinding CheckColor}"
+                                TextColor="{Binding CheckColor}"
                                 VerticalOptions="Center" />
                         </Frame>
-                        <Label
-                            Grid.Column="1"
-                            Text="{TemplateBinding Text}"
-                            TextColor="{TemplateBinding TextColor}"
-                            VerticalOptions="Center">
-                            <Label.Triggers>
-                                <Trigger TargetType="Label" Property="Text" Value="{x:Null}">
-                                    <Setter Property="IsVisible" Value="False" />
-                                </Trigger>
-                            </Label.Triggers>
-                        </Label>
-                        <ContentPresenter Grid.Column="1" />
+                        <ContentView Grid.Column="1">
+                            <ContentView.Content>
+                                <Binding Path="Content">
+                                    <Binding.TargetNullValue>
+                                        <Label
+                                            Text="{Binding Text}"
+                                            TextColor="{Binding TextColor}"
+                                            VerticalOptions="Center" />
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </ContentView.Content>
+                        </ContentView>
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{TemplateBinding CheckTappedCommand}" CommandParameter="{TemplateBinding}" />
+                            <TapGestureRecognizer Command="{Binding CheckTappedCommand}" CommandParameter="{Binding}" />
                         </Grid.GestureRecognizers>
                     </Grid>
                 </ControlTemplate>

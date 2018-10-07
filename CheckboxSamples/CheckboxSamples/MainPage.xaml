@@ -13,63 +13,61 @@
         <Style x:Key="ExtendedCheckboxUI" TargetType="bitView:Checkbox">
             <Setter Property="FillColor" Value="Purple" />
             <Setter Property="VisualStateManager.VisualStateGroups">
-                <Setter.Value>
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CheckboxStates">
-                            <VisualState x:Name="Checked" />
-                            <VisualState x:Name="Unchecked">
-                                <!--  Remark: Yellow instead of transparent!  -->
-                                <VisualState.Setters>
-                                    <Setter Property="FillColor" Value="Yellow" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter.Value>
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CheckboxStates">
+                        <VisualState x:Name="Checked" />
+                        <VisualState x:Name="Unchecked">
+                            <!--  Remark: Yellow instead of transparent!  -->
+                            <VisualState.Setters>
+                                <Setter Property="FillColor" Value="Yellow" />
+                                <Setter Property="CheckColor" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
             </Setter>
             <Setter Property="ControlTemplate">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Frame
-                                Padding="0"
-                                BackgroundColor="{TemplateBinding FillColor}"
-                                BorderColor="{TemplateBinding OutlineColor}"
-                                CornerRadius="3"
-                                HasShadow="True"
-                                HeightRequest="20"
-                                VerticalOptions="Center"
-                                WidthRequest="20">
-                                <Label
-                                    HorizontalOptions="Center"
-                                    Text="✓"
-                                    TextColor="{TemplateBinding CheckColor}"
-                                    VerticalOptions="Center" />
-                                <Frame.GestureRecognizers>
-                                    <!--  Remark: GestureRecognizers on frame instead of grid  -->
-                                    <TapGestureRecognizer Command="{TemplateBinding CheckTappedCommand}" CommandParameter="{TemplateBinding}" />
-                                </Frame.GestureRecognizers>
-                            </Frame>
+                <ControlTemplate>
+                    <Grid x:DataType="bitView:Checkbox" BindingContext="{TemplateBinding}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="{Binding FillColor}"
+                            BorderColor="{Binding OutlineColor}"
+                            CornerRadius="3"
+                            HasShadow="True"
+                            HeightRequest="20"
+                            VerticalOptions="Center"
+                            WidthRequest="20">
                             <Label
-                                Grid.Column="1"
-                                Text="{TemplateBinding Text}"
-                                TextColor="{TemplateBinding TextColor}"
-                                VerticalOptions="Center">
-                                <Label.Triggers>
-                                    <Trigger TargetType="Label" Property="Text" Value="{x:Null}">
-                                        <Setter Property="IsVisible" Value="False" />
-                                    </Trigger>
-                                </Label.Triggers>
-                            </Label>
-                            <ContentPresenter Grid.Column="1" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
+                                HorizontalOptions="Center"
+                                Text="✓"
+                                TextColor="{Binding CheckColor}"
+                                VerticalOptions="Center" />
+                            <Frame.GestureRecognizers>
+                                <!--  Remark: GestureRecognizers on frame instead of grid  -->
+                                <TapGestureRecognizer Command="{Binding CheckTappedCommand}" CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                        <ContentView Grid.Column="1">
+                            <ContentView.Content>
+                                <Binding Path="Content">
+                                    <Binding.TargetNullValue>
+                                        <Label
+                                            Text="{Binding Text}"
+                                            TextColor="{Binding TextColor}"
+                                            VerticalOptions="Center" />
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </ContentView.Content>
+                        </ContentView>
+                    </Grid>
+                </ControlTemplate>
             </Setter>
+
         </Style>
     </ContentPage.Resources>
 
@@ -86,11 +84,8 @@
             IsEnabled="False"
             Text="Disabled check box with check color gray instead of purple" />
 
-        <bitView:Checkbox IsEnabled="False">
-            <Button
-                FontAttributes="Bold"
-                Text="Custom button for check box"
-                VerticalOptions="Center" />
+        <bitView:Checkbox>
+            <Label FontAttributes="Bold" Text="custom label for check box. You can also put any custom control here!" />
         </bitView:Checkbox>
 
         <bitView:Checkbox Style="{StaticResource ExtendedCheckboxUI}" Text="Fully customized check box. See style remarks!" />
