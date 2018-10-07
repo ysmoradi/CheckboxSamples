@@ -28,7 +28,7 @@
             </Setter>
             <Setter Property="ControlTemplate">
                 <ControlTemplate>
-                    <Grid x:DataType="bitView:Checkbox" BindingContext="{TemplateBinding}">
+                    <Grid BindingContext="{TemplateBinding}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -73,7 +73,9 @@
 
     <StackLayout>
 
-        <bitView:Checkbox IsChecked="False" Text="Simple check box" />
+        <bitView:Checkbox IsChecked="False" Text="Simple check box1" Shape="Native" />
+        <bitView:Checkbox IsChecked="False" Text="Simple check box2" Shape="Circle" />
+        <bitView:Checkbox IsChecked="False" Text="Simple check box3" Shape="Rectangle" />
 
         <bitView:Checkbox Text="Simple check box" />
 
@@ -94,6 +96,7 @@
         <bitView:Checkbox IsChecked="{Binding IsChecked}" Text="Test is checked from view model binding" />
         <bitView:Checkbox
             IsChecked="{Binding IsChecked}"
+            IsCheckedChangedCommand="{Binding IsCheckedChanged}"
             IsEnabled="False"
             Text="Test is checked from view model binding 2" />
         <Label Text="{Binding IsChecked}" />

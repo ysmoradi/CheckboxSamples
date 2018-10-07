@@ -10,11 +10,18 @@ namespace CheckboxSamples
 
         public bool IsChecked { get; set; }
 
+        public ICommand IsCheckedChanged { get; set; }
+
         public ICommand ChangeIsChecked { get; set; }
 
         public MainPageViewModel()
         {
             ChangeIsChecked = new Command(() => IsChecked = !IsChecked);
+
+            IsCheckedChanged = new Command<bool>(isChecked =>
+            {
+
+            });
         }
     }
 }

@@ -99,10 +99,23 @@ namespace Bit.View
             get { return (ICommand)GetValue(IsCheckedChangedCommandProperty); }
             set { SetValue(IsCheckedChangedCommandProperty, value); }
         }
+
+        public static BindableProperty ShapeProperty = BindableProperty.Create(nameof(Shape), typeof(Shape), typeof(Checkbox), defaultValue: Shape.Native, defaultBindingMode: BindingMode.OneWay);
+
+        public Shape Shape
+        {
+            get { return (Shape)GetValue(ShapeProperty); }
+            set { SetValue(ShapeProperty, value); }
+        }
     }
 
     public class IsCheckChangedEventArgs : EventArgs
     {
         public bool IsChecked { get; set; }
+    }
+
+    public enum Shape
+    {
+        Circle, Rectangle, Native
     }
 }
