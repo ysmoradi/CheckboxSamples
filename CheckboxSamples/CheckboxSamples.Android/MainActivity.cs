@@ -15,6 +15,9 @@ namespace CheckboxSamples.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
+            Forms.SetFlags("FastRenderers_Experimental");
+
             Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }

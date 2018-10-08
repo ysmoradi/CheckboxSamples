@@ -3,7 +3,8 @@
     x:Class="Bit.View.Checkbox"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:bitView="clr-namespace:Bit.View">
+    xmlns:bitView="clr-namespace:Bit.View"
+    xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation">
     <TemplatedView.Resources>
         <Style TargetType="bitView:Checkbox">
 
@@ -67,15 +68,54 @@
                                     <Setter Property="CornerRadius" Value="{OnPlatform Default=2, iOS=10}" />
                                 </DataTrigger>
                             </Frame.Triggers>
-                            <Label
-                                HorizontalOptions="Center"
-                                Text="✓"
-                                TextColor="{Binding CheckColor}"
-                                VerticalOptions="Center" />
+                            <Grid>
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Text="✓"
+                                    TextColor="{Binding CheckColor}"
+                                    VerticalOptions="Center" />
+                                <BoxView
+                                    x:Name="BoxView"
+                                    BackgroundColor="{Binding FillColor}"
+                                    HeightRequest="14"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    WidthRequest="14">
+                                    <BoxView.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsChecked}"
+                                            TargetType="BoxView"
+                                            Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <xamanimation:BeginAnimation>
+                                                    <xamanimation:BeginAnimation.Animation>
+                                                        <xamanimation:TranslateToAnimation
+                                                            Easing="SpringIn"
+                                                            Target="{x:Reference BoxView}"
+                                                            TranslateX="17"
+                                                            Duration="170" />
+                                                    </xamanimation:BeginAnimation.Animation>
+                                                </xamanimation:BeginAnimation>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <!--  Workaround, because setting translate x to zero using 'Setter' is not working!  -->
+                                                <xamanimation:BeginAnimation>
+                                                    <xamanimation:BeginAnimation.Animation>
+                                                        <xamanimation:TranslateToAnimation
+                                                            Target="{x:Reference BoxView}"
+                                                            TranslateX="0"
+                                                            Duration="1" />
+                                                    </xamanimation:BeginAnimation.Animation>
+                                                </xamanimation:BeginAnimation>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </BoxView.Triggers>
+                                </BoxView>
+                            </Grid>
                         </Frame>
                         <ContentView Grid.Column="1">
                             <ContentView.Content>
-                                <Binding Path="Content">
+                                <Binding Mode="OneWay" Path="Content">
                                     <Binding.TargetNullValue>
                                         <Label
                                             Text="{Binding Text}"
