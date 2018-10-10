@@ -52,6 +52,7 @@
     <PackageReference Include="Xamarin.Forms" Version="3.3.0.871608-pre2" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitFrameRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

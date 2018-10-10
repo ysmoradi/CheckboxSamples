@@ -6,167 +6,176 @@
     xmlns:app="clr-namespace:CheckboxSamples"
     xmlns:bitView="clr-namespace:Bit.View"
     xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation">
-  <ContentPage.BindingContext>
-    <app:MainPageViewModel />
-  </ContentPage.BindingContext>
+    <ContentPage.BindingContext>
+        <app:MainPageViewModel />
+    </ContentPage.BindingContext>
 
-  <ContentPage.Resources>
-    <Style x:Key="ExtendedCheckboxUI" TargetType="bitView:Checkbox">
-      <Setter Property="FillColor" Value="Purple" />
-      <Setter Property="VisualStateManager.VisualStateGroups">
-        <VisualStateGroupList>
-          <VisualStateGroup x:Name="CheckboxStates">
-            <VisualState x:Name="Checked" />
-            <VisualState x:Name="Unchecked">
-              <!--  Remark: Yellow instead of transparent!  -->
-              <VisualState.Setters>
-                <Setter Property="FillColor" Value="Yellow" />
-                <Setter Property="CheckColor" Value="Transparent" />
-              </VisualState.Setters>
-            </VisualState>
-          </VisualStateGroup>
-        </VisualStateGroupList>
-      </Setter>
-      <Setter Property="ControlTemplate">
-        <ControlTemplate>
-          <Grid BindingContext="{TemplateBinding}">
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <Frame
-                Padding="0"
-                BackgroundColor="{Binding FillColor}"
-                BorderColor="{Binding OutlineColor}"
-                HasShadow="True"
-                HeightRequest="20"
-                VerticalOptions="Center"
-                WidthRequest="20">
-              <Frame.Triggers>
-                <DataTrigger
-                    Binding="{Binding Shape}"
-                    TargetType="Frame"
-                    Value="Circle">
-                  <Setter Property="CornerRadius" Value="10" />
-                </DataTrigger>
-                <DataTrigger
-                    Binding="{Binding Shape}"
-                    TargetType="Frame"
-                    Value="Rectangle">
-                  <Setter Property="CornerRadius" Value="2" />
-                </DataTrigger>
-                <DataTrigger
-                    Binding="{Binding Shape}"
-                    TargetType="Frame"
-                    Value="Native">
-                  <Setter Property="CornerRadius" Value="{OnPlatform Default=2, iOS=10}" />
-                </DataTrigger>
-              </Frame.Triggers>
-              <Frame.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding CheckTappedCommand}" CommandParameter="{Binding}" />
-              </Frame.GestureRecognizers>
-              <Grid>
-                <Label
-                    HorizontalOptions="Center"
-                    Text="✓"
-                    TextColor="{Binding CheckColor}"
-                    VerticalOptions="Center" />
-                <BoxView
-                    x:Name="BoxView"
-                    BackgroundColor="{Binding FillColor}"
-                    HeightRequest="14"
-                    HorizontalOptions="Center"
-                    VerticalOptions="Center"
-                    WidthRequest="14">
-                  <BoxView.Triggers>
-                    <DataTrigger
-                        Binding="{Binding IsChecked}"
-                        TargetType="BoxView"
-                        Value="True">
-                      <DataTrigger.EnterActions>
-                        <xamanimation:BeginAnimation>
-                          <xamanimation:BeginAnimation.Animation>
-                            <xamanimation:TranslateToAnimation
-                                Easing="SpringIn"
-                                Target="{x:Reference BoxView}"
-                                TranslateX="17"
-                                Duration="170" />
-                          </xamanimation:BeginAnimation.Animation>
-                        </xamanimation:BeginAnimation>
-                      </DataTrigger.EnterActions>
-                      <DataTrigger.ExitActions>
-                        <!--  Workaround, because setting translate x to zero using 'Setter' is not working!  -->
-                        <xamanimation:BeginAnimation>
-                          <xamanimation:BeginAnimation.Animation>
-                            <xamanimation:TranslateToAnimation
-                                Target="{x:Reference BoxView}"
-                                TranslateX="0"
-                                Duration="1" />
-                          </xamanimation:BeginAnimation.Animation>
-                        </xamanimation:BeginAnimation>
-                      </DataTrigger.ExitActions>
-                    </DataTrigger>
-                  </BoxView.Triggers>
-                </BoxView>
-              </Grid>
-            </Frame>
-            <ContentView Grid.Column="1">
-              <ContentView.Content>
-                <Binding Mode="OneWay" Path="Content">
-                  <Binding.TargetNullValue>
-                    <Label
-                        Text="{Binding Text}"
-                        TextColor="{Binding TextColor}"
-                        VerticalOptions="Center" />
-                  </Binding.TargetNullValue>
-                </Binding>
-              </ContentView.Content>
-            </ContentView>
-          </Grid>
-        </ControlTemplate>
-      </Setter>
+    <ContentPage.Resources>
+        <Style x:Key="ExtendedCheckboxUI" TargetType="bitView:Checkbox">
+            <Setter Property="FillColor" Value="Purple" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CheckboxStates">
+                        <VisualState x:Name="Checked" />
+                        <VisualState x:Name="Unchecked">
+                            <!--  Remark: Yellow instead of transparent!  -->
+                            <VisualState.Setters>
+                                <Setter Property="FillColor" Value="Yellow" />
+                                <Setter Property="CheckColor" Value="Transparent" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+            <Setter Property="ControlTemplate">
+                <ControlTemplate>
+                    <Grid BindingContext="{TemplateBinding}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Frame
+                            Padding="0"
+                            BackgroundColor="{Binding FillColor}"
+                            BorderColor="{Binding OutlineColor}"
+                            HasShadow="True"
+                            HeightRequest="20"
+                            VerticalOptions="Center"
+                            WidthRequest="20">
+                            <Frame.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding Shape}"
+                                    TargetType="Frame"
+                                    Value="Circle">
+                                    <Setter Property="CornerRadius" Value="10" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding Shape}"
+                                    TargetType="Frame"
+                                    Value="Rectangle">
+                                    <Setter Property="CornerRadius" Value="2" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding Shape}"
+                                    TargetType="Frame"
+                                    Value="Native">
+                                    <Setter Property="CornerRadius" Value="{OnPlatform Default=2, iOS=10}" />
+                                </DataTrigger>
+                            </Frame.Triggers>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CheckTappedCommand}" CommandParameter="{Binding}" />
+                            </Frame.GestureRecognizers>
+                            <Grid>
+                                <Label
+                                    HorizontalOptions="Center"
+                                    Text="✓"
+                                    TextColor="{Binding CheckColor}"
+                                    VerticalOptions="Center" />
+                                <BoxView
+                                    x:Name="BoxView"
+                                    BackgroundColor="{Binding FillColor}"
+                                    HeightRequest="14"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"
+                                    WidthRequest="14">
+                                    <BoxView.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsChecked}"
+                                            TargetType="BoxView"
+                                            Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <xamanimation:BeginAnimation>
+                                                    <xamanimation:BeginAnimation.Animation>
+                                                        <xamanimation:TranslateToAnimation
+                                                            Easing="SpringIn"
+                                                            Target="{x:Reference BoxView}"
+                                                            TranslateX="17"
+                                                            Duration="170" />
+                                                    </xamanimation:BeginAnimation.Animation>
+                                                </xamanimation:BeginAnimation>
+                                            </DataTrigger.EnterActions>
+                                            <DataTrigger.ExitActions>
+                                                <!--  Workaround, because setting translate x to zero using 'Setter' is not working!  -->
+                                                <xamanimation:BeginAnimation>
+                                                    <xamanimation:BeginAnimation.Animation>
+                                                        <xamanimation:TranslateToAnimation
+                                                            Target="{x:Reference BoxView}"
+                                                            TranslateX="0"
+                                                            Duration="1" />
+                                                    </xamanimation:BeginAnimation.Animation>
+                                                </xamanimation:BeginAnimation>
+                                            </DataTrigger.ExitActions>
+                                        </DataTrigger>
+                                    </BoxView.Triggers>
+                                </BoxView>
+                            </Grid>
+                        </Frame>
+                        <ContentView Grid.Column="1">
+                            <ContentView.Content>
+                                <Binding Mode="OneWay" Path="Content">
+                                    <Binding.TargetNullValue>
+                                        <Label
+                                            Text="{Binding Text}"
+                                            TextColor="{Binding TextColor}"
+                                            VerticalOptions="Center" />
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </ContentView.Content>
+                        </ContentView>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
 
-    </Style>
-  </ContentPage.Resources>
+        </Style>
+    </ContentPage.Resources>
 
-  <StackLayout>
+    <StackLayout>
 
-    <bitView:Checkbox
-        IsChecked="False"
-        Shape="Native"
-        Text="Simple check box1" />
-    <bitView:Checkbox
-        IsChecked="False"
-        Shape="Circle"
-        Text="Simple check box2" />
-    <bitView:Checkbox
-        IsChecked="False"
-        Shape="Rectangle"
-        Text="Simple check box3" />
+        <bitView:Checkbox
+            IsChecked="False"
+            Shape="Native"
+            Text="Simple check box1" />
+        <bitView:Checkbox
+            IsChecked="False"
+            Shape="Circle"
+            Text="Simple check box2" />
+        <bitView:Checkbox
+            IsChecked="False"
+            Shape="Rectangle"
+            Text="Simple check box3" />
 
-    <bitView:Checkbox Text="Simple check box" />
+        <bitView:Checkbox Text="Simple check box" />
 
-    <bitView:Checkbox CheckColor="Purple" Text="Simple check box with purple check color" />
+        <bitView:Checkbox CheckColor="Purple" Text="Simple check box with purple check color" />
 
-    <bitView:Checkbox
-        CheckColor="Purple"
-        IsEnabled="False"
-        Text="Disabled check box with check color gray instead of purple" />
+        <bitView:Checkbox
+            CheckColor="Purple"
+            IsEnabled="False"
+            Text="Disabled check box with check color gray instead of purple" />
 
-    <bitView:Checkbox>
-      <Label FontAttributes="Bold" Text="custom label for check box. You can also put any custom control here!" />
-    </bitView:Checkbox>
+        <bitView:Checkbox>
+            <Label FontAttributes="Bold" Text="custom label for check box. You can also put any custom control here!" />
+        </bitView:Checkbox>
 
-    <bitView:Checkbox Style="{StaticResource ExtendedCheckboxUI}" Text="Fully customized check box. See style remarks!" />
+        <bitView:Checkbox Style="{StaticResource ExtendedCheckboxUI}" Text="Fully customized check box. See style remarks!" />
 
-    <Button Command="{Binding ChangeIsChecked}" Text="Change is checked!" />
-    <bitView:Checkbox IsChecked="{Binding IsChecked}" Text="Test is checked from view model binding" />
-    <bitView:Checkbox
-        IsChecked="{Binding IsChecked}"
-        IsCheckedChangedCommand="{Binding IsCheckedChanged}"
-        IsEnabled="False"
-        Text="Test is checked from view model binding 2" />
-    <Label Text="{Binding IsChecked}" />
+        <Button Command="{Binding ChangeIsChecked}" Text="Change is checked!" />
+        <bitView:Checkbox IsChecked="{Binding IsChecked}" Text="Test is checked from view model binding" />
+        <bitView:Checkbox
+            IsChecked="{Binding IsChecked}"
+            IsCheckedChangedCommand="{Binding IsCheckedChanged}"
+            IsEnabled="False"
+            Text="Test is checked from view model binding 2" />
 
-  </StackLayout>
+        <Frame
+            Padding="0"
+            bitView:FrameProps.BorderWidth="5"
+            BorderColor="Red"
+            HasShadow="False"
+            HeightRequest="64"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            WidthRequest="64" />
+
+    </StackLayout>
 </ContentPage>
